@@ -98,25 +98,25 @@ namespace HeatChargingSystem.model
                     flag = -3;
                     return flag;
                 }
-                else
-                {
-                    RequestLoginModel request = new RequestLoginModel();
-                    request.account = this.userName;
-                    request.password = this.userPassword;
+                //else
+                //{
+                //    RequestLoginModel request = new RequestLoginModel();
+                //    request.account = this.userName;
+                //    request.password = this.userPassword;
 
-                    ResponseTokenModel response = new ApiImpl().Login(request);
-                    if (response != null)
-                    {
-                        AppConfigMoel.token = response.token;
-                        flag = 1;
-                    }
-                    else
-                        flag = -6;
-                    System.Threading.Thread.Sleep(1500);
-                }
-                //flag = 1;
-                //System.Threading.Thread.Sleep(1500);
-                //Console.WriteLine(this.userName + this.userPassword);
+                //    ResponseTokenModel response = new ApiImpl().Login(request);
+                //    if (response != null)
+                //    {
+                //        AppConfigMoel.token = response.token;
+                //        flag = 1;
+                //    }
+                //    else
+                //        flag = -6;
+                //    System.Threading.Thread.Sleep(1500);
+                //}
+                flag = 1;
+                System.Threading.Thread.Sleep(1500);
+                Console.WriteLine(this.userName + this.userPassword);
             }
             catch (Exception)
             {

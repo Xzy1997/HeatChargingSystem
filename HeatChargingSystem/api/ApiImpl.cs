@@ -77,7 +77,7 @@ namespace HeatChargingSystem.api
                 string result = HttpUtils.GetRequest(url, AppConfigMoel.token);
                 BaseResponseModel responseModel = JsonConvert.DeserializeObject<BaseResponseModel>(result);
                 // string str= "[{'id':3,'sort':1,'pid':2,'level':3,'name':'福州市','code':'01','longCode':'3501','hasParent':false,'hasChildren':false},{'id':4,'sort':1,'pid':3,'level':3,'name':'宁波市','code':'01','longCode':'3501','hasParent':false,'hasChildren':false}]";
-                if (responseModel.data.ToString() != null)
+                if (responseModel.data != null)
                 {
                     var arrdata = Newtonsoft.Json.Linq.JArray.Parse(responseModel.data.ToString());
                     //var arrdata = Newtonsoft.Json.Linq.JArray.Parse(str);

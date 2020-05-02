@@ -57,15 +57,44 @@
         </Grid>
         <Grid Grid.Row="4">
             <StackPanel Orientation="Horizontal"  Height="36">
-                <local:DictrictControl x:Name="District" />
-              <!--  
                 <pu:TextBlockX Width="66" Height="18" Margin="42 0 0 0" MatchText="*"  MatchedForeground="Red" Text="*所在地区"  FontSize="14"></pu:TextBlockX>
                 <ComboBox Width="140" Height="36" Margin="11 0 0 0" pu:ComboBoxHelper.Watermark="选择省份/地区" pu:ComboBoxHelper.CornerRadius="4"></ComboBox>
                 <ComboBox Width="100" Height="36" Margin="10 0 0 0" pu:ComboBoxHelper.Watermark="选择城市" pu:ComboBoxHelper.CornerRadius="4"></ComboBox>
                 <ComboBox Width="126" Height="36" Margin="10 0 0 0" pu:ComboBoxHelper.Watermark="选择区/县" pu:ComboBoxHelper.CornerRadius="4"></ComboBox>
                 <ComboBox Width="140" Height="36" Margin="10 0 0 0" pu:ComboBoxHelper.Watermark="选择街道" pu:ComboBoxHelper.CornerRadius="4"></ComboBox>
                 <ComboBox Width="126" Height="36" Margin="10 0 0 0" pu:ComboBoxHelper.Watermark="选择小区" pu:ComboBoxHelper.CornerRadius="4"></ComboBox>
-                -->
+                  <StackPanel Orientation="Horizontal"  Height="36">
+            <pu:TextBlockX  Width="66" Height="18" Margin="42 0 0 0" MatchText="*"  MatchedForeground="Red" Text="*所在地区"  FontSize="14"></pu:TextBlockX>
+            <ComboBox Width="140" DisplayMemberPath="name" Height="36" Margin="11 0 0 0" pu:ComboBoxHelper.Watermark="选择省份/地区" pu:ComboBoxHelper.CornerRadius="4" SelectionChanged="com_province_SelectionChanged_1"   Name="com_province">
+
+            </ComboBox>
+            <ComboBox Width="100" DisplayMemberPath="name" Height="36" Margin="10 0 0 0" pu:ComboBoxHelper.Watermark="选择城市" pu:ComboBoxHelper.CornerRadius="4" SelectionChanged="com_city_SelectionChanged_1"  Name="com_city">
+    
+            </ComboBox>
+            <ComboBox Width="126" DisplayMemberPath="name" Height="36" Margin="10 0 0 0" pu:ComboBoxHelper.Watermark="选择区/县" pu:ComboBoxHelper.CornerRadius="4" Name="com_county" SelectionChanged="com_county_SelectionChanged_1">
+      
+            </ComboBox>
+            <ComboBox Width="140" DisplayMemberPath="name" Height="36" Margin="10 0 0 0" pu:ComboBoxHelper.Watermark="选择街道" pu:ComboBoxHelper.CornerRadius="4" Name="com_street" SelectionChanged="com_street_SelectionChanged_1" >
+             
+            </ComboBox>
+            <ComboBox Width="126" DisplayMemberPath="name" Height="36" Margin="10 0 0 0" pu:ComboBoxHelper.Watermark="选择小区" pu:ComboBoxHelper.CornerRadius="4" Name="com_village" >
+            
+            </ComboBox>
+           
+
+            <TextBox Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Margin="6,0,0,0" Name="address">
+                <TextBox.BorderBrush>
+                    <LinearGradientBrush EndPoint="0,20" MappingMode="Absolute" StartPoint="0,0">
+                        <GradientStop Color="#FFABADB3" Offset="0.05"/>
+                        <GradientStop Color="#FFE2E3EA" Offset="0.07"/>
+                        <GradientStop Color="#FF333333" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBox.BorderBrush>
+                <TextBox.Background>
+                    <SolidColorBrush Color="White" Opacity="0"/>
+                </TextBox.Background>
+            </TextBox>
+        </StackPanel>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="5">

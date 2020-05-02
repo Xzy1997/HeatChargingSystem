@@ -307,18 +307,19 @@ namespace HeatChargingSystem
             request.controllerCode = doorid;
             if(this.status.SelectedIndex!=-1)
             request.status = status.ToString();
-            List<ResponseUserInfoModel> response = new ApiImpl().SearchUser(request);
-            if (response != null)
-            {
-                foreach(var i in response)
-                {
-                    System.Windows.MessageBox.Show(i.id, "系统提示", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
-                }
-           
-            this.dataGrid.ItemsSource = response;
-            }
-            else
-                System.Windows.MessageBox.Show("无数据", "系统提示", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            //List<ResponseUserInfoModel> response = new ApiImpl().SearchUser(request);
+            //if (response != null)
+            //{
+            //    foreach(var i in response)
+            //    {
+            //        System.Windows.MessageBox.Show(i.id, "系统提示", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            //    }
+
+            //this.dataGrid.ItemsSource = response;
+            //}
+            //else
+            //    System.Windows.MessageBox.Show("无数据", "系统提示", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            this.dataGrid.ItemsSource = new List<ResponseUserInfoModel>();
         }
     }
 }

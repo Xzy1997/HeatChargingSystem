@@ -1,12 +1,17 @@
 ﻿using HeatChargingSystem.api;
+using HeatChargingSystem.constants;
 using HeatChargingSystem.model.request;
 using HeatChargingSystem.model.response;
+using HeatChargingSystem.utils;
 using HeatChargingSystem.view;
 using HeatChargingSystem.view.homeAction;
 using Panuon.UI.Silver;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Management;
+using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
@@ -72,6 +77,14 @@ namespace HeatChargingSystem
             window.ShowDialog();
             this.IsMaskVisible = false;
         }
+        string fullFilePath;
+        private FileInfo InfoFile
+        {
+            get
+            {
+                return new FileInfo(fullFilePath);
+            }
+        }
         /// <summary>
         /// 输入软件注册码
         /// </summary>
@@ -79,6 +92,29 @@ namespace HeatChargingSystem
         /// <param name="e"></param>
         private void SettingSoftWareRegistrationKeyEventBtnClick(object sender, System.Windows.RoutedEventArgs e)
         {
+            string fileName = "guid.txt";
+            using (StreamWriter s = File.CreateText(fileName))
+            {
+                string strMachineCode = string.Empty;
+                string strCpu = string.Empty;
+                string strDiskC = string.Empty;
+                ManagementClass myCpu = new ManagementClass("win32_Processor");
+                ManagementObjectCollection myCpuCollections = myCpu.GetInstances();
+                foreach (ManagementObject obj in myCpuCollections)
+                {
+                    strCpu = obj.Properties["Processorid"].Value.ToString();
+                }
+
+                ManagementObject disk = new ManagementObject("win32_logicaldisk.deviceid=\"c:\"");
+                strDiskC = disk.GetPropertyValue("VolumeSerialNumber").ToString();
+
+                strMachineCode = strCpu + strDiskC;
+                s.WriteLine(strMachineCode.Trim());
+                s.Close();
+
+            }
+
+            System.Console.WriteLine(ConstantsValue.GUID+"12");
             SettingSoftwareRegistrationKeyWindow window = new SettingSoftwareRegistrationKeyWindow();
             this.IsMaskVisible = true;
             window.ShowDialog();

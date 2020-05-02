@@ -8,6 +8,11 @@ namespace HeatChargingSystem.constants
 {
     public class ConstantsValue
     {
+
+        /// <summary>
+        /// GUID
+        /// </summary>
+        public static string GUID = "";
         /// <summary>
         /// 登录URI
         /// </summary>

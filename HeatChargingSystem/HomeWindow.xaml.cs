@@ -11,10 +11,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Management;
+using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace HeatChargingSystem
 {
@@ -85,6 +88,26 @@ namespace HeatChargingSystem
                 return new FileInfo(fullFilePath);
             }
         }
+
+
+        /// <summary>
+        /// 写入公钥文本流
+        /// </summary>
+        private void writePublicKey()
+        {
+            fullFilePath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            fullFilePath += "pubkey.xml";
+            if (InfoFile.Exists)
+            {
+                return;
+            }
+            string pubkey = "<RSAKeyValue><Modulus>6HChoJt19leSSHhf5zntrRufitNgVEjxgVCA6iEtml6q92saO0rbOhWsgURgMVsv/onsf30+ysLVHCzUQzibTS/+wF6e9b20AKHFTszUDQYfKXbUjf3kNzhHs7+OKt7uiimcCaiUlkTUe1kcmiq1FK+QrfLDZmeVkJWkoHRBjF0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(pubkey);
+            doc.Save("pubkey.xml");
+
+  
+        }
         /// <summary>
         /// 输入软件注册码
         /// </summary>
@@ -93,6 +116,7 @@ namespace HeatChargingSystem
         private void SettingSoftWareRegistrationKeyEventBtnClick(object sender, System.Windows.RoutedEventArgs e)
         {
             string fileName = "guid.txt";
+            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             using (StreamWriter s = File.CreateText(fileName))
             {
                 string strMachineCode = string.Empty;
@@ -107,14 +131,16 @@ namespace HeatChargingSystem
 
                 ManagementObject disk = new ManagementObject("win32_logicaldisk.deviceid=\"c:\"");
                 strDiskC = disk.GetPropertyValue("VolumeSerialNumber").ToString();
-
-                strMachineCode = strCpu + strDiskC;
+                
+               
+                strMachineCode = strCpu + strDiskC+version;
                 s.WriteLine(strMachineCode.Trim());
                 s.Close();
 
             }
+            //MessageBox.Show(version);
+            writePublicKey();
 
-            System.Console.WriteLine(ConstantsValue.GUID+"12");
             SettingSoftwareRegistrationKeyWindow window = new SettingSoftwareRegistrationKeyWindow();
             this.IsMaskVisible = true;
             window.ShowDialog();

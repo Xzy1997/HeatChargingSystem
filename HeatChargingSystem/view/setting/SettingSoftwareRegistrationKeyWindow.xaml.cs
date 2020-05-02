@@ -29,18 +29,13 @@ namespace HeatChargingSystem.view
 
         private void VerifySignature(object sender, RoutedEventArgs e)
         {
-            //获取GUID
-            string guid= getGUID();
-            //System.Windows.MessageBox.Show(guid);
-            //发送GUID
 
-            //返回公钥
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(1024))
             {
                 //获取公钥
                 rsa.FromXmlString(getPubkey());
                 //获取并处理唯一特征值
-                byte[] source = ASCIIEncoding.ASCII.GetBytes(guid);
+                byte[] source = ASCIIEncoding.ASCII.GetBytes(getGUID());
 
                 RSAPKCS1SignatureDeformatter decry = new RSAPKCS1SignatureDeformatter(rsa);
                 decry.SetHashAlgorithm("SHA1");
@@ -49,16 +44,28 @@ namespace HeatChargingSystem.view
                 SHA1Managed sha = new SHA1Managed();
                 byte[] arr = sha.ComputeHash(source);
                 TextRange tr = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
-                byte[] signed = Convert.FromBase64String(tr.Text);
+                try
+                {
+                    byte[] signed = Convert.FromBase64String(tr.Text);
+                    if (decry.VerifySignature(arr, signed))
+                    {
+                        MessageBox.Show("注册成功！");
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("注册失败！请输入正确的注册码！");
+                        this.Close();
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("注册失败！请输入正确的注册码！");
+                    return ;
+                }
+                
 
-                if (decry.VerifySignature(arr, signed))
-                {
-                    MessageBox.Show("注册成功！");
-                }
-                else
-                {
-                    MessageBox.Show("注册失败！");
-                }
+                
 
 
             }
@@ -72,6 +79,7 @@ namespace HeatChargingSystem.view
             string pubkey = string.Empty;
             try
             {
+
                 string path = string.Empty;
                 path = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
                 path += "pubkey.xml";
